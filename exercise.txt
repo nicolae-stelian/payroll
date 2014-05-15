@@ -4,3 +4,4 @@
 2. Run all phpunit tests.
 3. How you implement a log for all operations?
 4. Make ajax call for verify employee salary.
+5. For what we use phploc, phpmd, phpcs in a project?
