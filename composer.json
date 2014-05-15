@@ -11,8 +11,8 @@
     "autoload": {
         "psr-0": {
             "Payroll": "src/",
-            "WebInterface": "src/"
+            "WebInterface": "src/",
+            "Tests": "tests/"
         }
-
     }
 }
