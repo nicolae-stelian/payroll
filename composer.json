@@ -1,0 +1,18 @@
+{
+    "name": "payroll system",
+    "description": "A payroll system",
+
+    "require": {
+        "php": ">=5.3.3",
+        "twig/twig": "1.*",
+        "aura/router": "2.0.*@dev",
+        "phpunit/phpunit": "4.1.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Payroll": "src/",
+            "WebInterface": "src/"
+        }
+
+    }
+}
