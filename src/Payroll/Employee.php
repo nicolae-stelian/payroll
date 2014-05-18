@@ -52,7 +52,7 @@ class Employee
         return $this->name;
     }
 
-    public function GetSalary()
+    public function getSalary()
     {
         return $this->type->getSalary($this);
     }

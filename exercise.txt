@@ -7,5 +7,7 @@
 5. Implement code for the test that already exists and is failed.
 
 6. For what we use phploc, phpmd, phpcs in a project?
+
 7. What Design Patterns you recognize in this projects? (get salary is strategy pattern, transaction execute is command pattern )
+
 8. If you want to implement a log for all operations, what design pattern you will use? (observer and how?)
