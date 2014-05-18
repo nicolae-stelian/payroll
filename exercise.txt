@@ -1,13 +1,13 @@
 
 
-1. Use composer to install all dependencies (vendor directory).
+1. Use composer to install all dependencies.
 2. Run all phpunit tests.
 3. You can see something to improve/refactoring in PayrollDatabase?
 4. Write a test for testing an exception. (PayrollDatabase what function you want).
 5. Implement code for the test that already exists and is failed.
+6. Reading the web/index.php what url you use for call tdd action/function IndexController::tdd in webpage?
+7. Write a new controller with a new action, that will overwrite only the {% block content %} of base.twig
+8. For what we use phploc, phpmd, phpcs in a project?
+9. What Design Patterns you recognize in this projects?
+10. If you want to implement a log for all operations, what design pattern you will use?
 
-6. For what we use phploc, phpmd, phpcs in a project?
-
-7. What Design Patterns you recognize in this projects? (get salary is strategy pattern, transaction execute is command pattern )
-
-8. If you want to implement a log for all operations, what design pattern you will use? (observer and how?)
