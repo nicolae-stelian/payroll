@@ -2,9 +2,10 @@
 
 1. Use composer to install all dependencies (vendor directory).
 2. Run all phpunit tests.
+3. You can see something to improve/refactoring in PayrollDatabase?
+4. Write a test for testing an exception. (PayrollDatabase what function you want).
+5. Implement code for the test that already exists and is failed.
 
-3. Implement code for the test that allready exists.
-
-4. For what we use phploc, phpmd, phpcs in a project?
-5. What Design Patterns you recognize in this projects? (get salary is strategy pattern, transaction execute is command pattern )
-6. If you want to implement a log for all operations, what design pattern you will use? (observer and how?)
+6. For what we use phploc, phpmd, phpcs in a project?
+7. What Design Patterns you recognize in this projects? (get salary is strategy pattern, transaction execute is command pattern )
+8. If you want to implement a log for all operations, what design pattern you will use? (observer and how?)

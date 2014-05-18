@@ -5,6 +5,10 @@ namespace Payroll\Transactions;
 
 
 use Payroll\Employee;
+use Payroll\PaymentMethod\HoldMethod;
+use Payroll\PayrollDatabase;
+use Payroll\Schedule\MonthlySchedule;
+use Payroll\EmployeeType\SalariedType;
 
 class AddSalariedEmployee
 {
@@ -13,9 +17,8 @@ class AddSalariedEmployee
     protected $address;
     protected $salary;
 
-    public function __construct($id, $name, $address, $salary)
+    public function __construct($name, $address, $salary)
     {
-        $this->id = $id;
         $this->name = $name;
         $this->address = $address;
         $this->salary = $salary;
@@ -24,6 +27,13 @@ class AddSalariedEmployee
     public function execute()
     {
         $employee = new Employee($this->name, $this->address);
+        $employee->setPaymentMethod(new HoldMethod());
+        $employee->setType(new SalariedType());
+        $employee->setSchedule(new MonthlySchedule());
 
+        $payrollDb = new PayrollDatabase();
+        $payrollDb->save($employee);
+
+        return $employee;
     }
 }

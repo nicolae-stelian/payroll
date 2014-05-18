@@ -4,7 +4,7 @@
 namespace Payroll\PaymentMethod;
 
 
-class HoldMethod
+class HoldMethod implements PaymentMethod
 {
 
 } 

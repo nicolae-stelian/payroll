@@ -27,6 +27,11 @@ class Employee
         $this->id = $id;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function setType(EmployeeType\EmployeeType $type)
     {
         $this->type = $type;
@@ -65,5 +70,21 @@ class Employee
     public function GetMethod()
     {
         return $this->paymentMethod;
+    }
+
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    public function toArray()
+    {
+        $array[] = $this->name;
+        $array[] = $this->address;
+        $array[] = get_class($this->paymentMethod);
+        $array[] = get_class($this->schedule);
+        $array[] = get_class($this->type);
+
+        return $array;
     }
 }

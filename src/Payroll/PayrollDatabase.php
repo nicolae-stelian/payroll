@@ -4,8 +4,6 @@
 namespace Payroll;
 
 
-use SebastianBergmann\Comparator\ExceptionComparatorTest;
-
 class PayrollDatabase
 {
 
@@ -13,7 +11,7 @@ class PayrollDatabase
     public function clean()
     {
         try {
-            $dbh = new \PDO("sqlite:" . __DIR__ . "/../../sqlitedb/payroll.db");
+            $dbh = new \PDO('mysql:host=localhost;port=3306;dbname=payroll', 'user', 'password', array( \PDO::ATTR_PERSISTENT => false));
             $dbh->exec("DELETE FROM employees");
         } catch(\PDOException $e) {
             echo $e->getMessage();
@@ -28,7 +26,7 @@ class PayrollDatabase
             $stm = $dbh->prepare($query);
             $stm->execute(array($employeeId));
             $result = $stm->fetch(\PDO::FETCH_ASSOC);
-            return $this->createEmployee($result);
+            return $this->createEmployeeFromArray($result);
 
         } catch(\PDOException $e) {
             echo $e->getMessage();
@@ -37,9 +35,31 @@ class PayrollDatabase
        throw new \Exception("Employee with id = " . $employeeId . " don't exists in database");
     }
 
-    protected function createEmployee(array $data)
+
+    public function save(Employee $employee)
+    {
+        try {
+            $dbh = new \PDO('mysql:host=localhost;port=3306;dbname=payroll', 'user', 'password', array( \PDO::ATTR_PERSISTENT => false));
+            $bind = $employee->toArray();
+            $query = "INSERT INTO employees(name, address, paymentMethod, schedule, type) VALUES (?, ?, ?, ?, ?)";
+            $stm = $dbh->prepare($query);
+            if ($stm->execute($bind)) {
+                $employee->setId($dbh->lastInsertId());
+                return true;
+            }
+
+        } catch(\PDOException $e) {
+            echo $e->getMessage();
+        }
+
+        throw new \Exception("Cannot save employee en database");
+    }
+
+    protected function createEmployeeFromArray(array $data)
     {
         $employee = new Employee($data['name'], $data['address']);
+        $employee->setId($data['id']);
+
         // verification if this classes exists
         $employee->setPaymentMethod(new $data['paymentMethod']);
         $employee->setSchedule(new $data['schedule']);

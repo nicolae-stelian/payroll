@@ -4,7 +4,7 @@
 namespace Payroll\Schedule;
 
 
-class MonthlySchedule
+class MonthlySchedule implements Schedule
 {
 
 } 
