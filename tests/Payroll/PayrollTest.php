@@ -44,7 +44,7 @@ class PayrollTest extends \PHPUnit_Framework_TestCase
         $db = new PayrollDatabase();
         $emp = $db->getEmployee($employee->getId());
 
-        $this->assertEquals("Bob", $emp->getName());
+        $this->assertEquals("Bill", $emp->getName());
 
         /** @var \Payroll\EmployeeType\HourlyType $hourlyType */
         $hourlyType = $emp->GetType();
