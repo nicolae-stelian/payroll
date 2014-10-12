@@ -7,4 +7,4 @@ namespace Payroll\PaymentMethod;
 interface PaymentMethod
 {
 
-} 
+}

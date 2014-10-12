@@ -17,7 +17,8 @@ class Employee
     protected $address;
     protected $id;
 
-    public function __construct($name, $address) {
+    public function __construct($name, $address)
+    {
         $this->name = $name;
         $this->address = $address;
     }
@@ -57,17 +58,17 @@ class Employee
         return $this->type->getSalary($this);
     }
 
-    public function GetType()
+    public function getType()
     {
         return $this->type;
     }
 
-    public function GetSchedule()
+    public function getSchedule()
     {
         return $this->schedule;
     }
 
-    public function GetMethod()
+    public function getMethod()
     {
         return $this->paymentMethod;
     }

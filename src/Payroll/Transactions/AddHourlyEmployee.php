@@ -5,10 +5,6 @@ namespace Payroll\Transactions;
 
 
 use Payroll\Employee;
-use Payroll\PaymentMethod\HoldMethod;
-use Payroll\PayrollDatabase;
-use Payroll\Schedule\MonthlySchedule;
-use Payroll\EmployeeType\SalariedType;
 
 class AddHourlyEmployee
 {

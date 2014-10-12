@@ -7,4 +7,4 @@ namespace Payroll\Schedule;
 interface Schedule
 {
 
-} 
+}

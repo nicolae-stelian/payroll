@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="PayRoll" default="build">
+    <target name="build"
+            depends="vendors-install, vendors-update,
+            check-syntax, check-coding-standard, run-tests,
+            copy-paste-detector, mess-detector">
+    </target>
+
+    <target name="vendors-install" description="Add Vendors">
+        <exec executable="composer.phar" failonerror="true">
+            <arg value='install'/>
+        </exec>
+    </target>
+
+    <target name="vendors-update" description="Update Vendors">
+        <exec executable="composer.phar" failonerror="true">
+            <arg value='update'/>
+        </exec>
+    </target>
+
+    <target name="check-syntax">
+        <apply executable="php" failonerror="true">
+            <arg value="-l"/>
+            <fileset dir="${basedir}/src">
+                <include name="**/*.php"/>
+            </fileset>
+            <fileset dir="${basedir}/tests">
+                <include name="**/*.php"/>
+            </fileset>
+        </apply>
+    </target>
+
+    <target name="check-coding-standard"
+            description="Find coding standard violations using PHP Code Sniffer">
+        <exec executable="phpcs.phar" failonerror="true">
+            <arg value="--standard=PSR2"/>
+            <arg path="${basedir}/src"/>
+        </exec>
+        <exec executable="phpcs" failonerror="true">
+            <arg value="--standard=PSR2"/>
+            <arg path="${basedir}/tests"/>
+        </exec>
+    </target>
+
+    <target name="run-tests" description="Run unit tests with PHPUnit">
+        <exec executable="phpunit.phar" failonerror="true"/>
+    </target>
+
+    <target name="copy-paste-detector" description="Copy/Paste detector">
+        <exec executable="phpcpd.phar" failonerror="false">
+            <arg path="${basedir}/src"/>
+        </exec>
+    </target>
+
+    <target name="mess-detector" description="Mess detector">
+        <exec executable="phpmd.phar" failonerror="false">
+            <arg path="${basedir}/src"/>
+            <arg value='text'/>
+            <arg value='codesize, unusedcode, naming'/>
+        </exec>
+    </target>
+
+</project>
+

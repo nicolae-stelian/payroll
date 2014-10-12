@@ -5,8 +5,7 @@
     "require": {
         "php": ">=5.3.3",
         "twig/twig": "1.*",
-        "aura/router": "2.0.*@dev",
-        "phpunit/phpunit": "4.1.*"
+        "aura/router": "2.1.0"
     },
     "autoload": {
         "psr-0": {

@@ -19,5 +19,4 @@ class IndexController
         $twig = new \Twig_Environment($loader);
         echo $twig->render('base.twig', array('name' => 'TDD!!'));
     }
-
-} 
+}
