@@ -6,86 +6,36 @@ namespace Payroll;
 
 class Employee
 {
-    /** @var  EmployeeType\EmployeeType $type */
+    /** @var  SalariedType */
     protected $type;
-    /** @var  Schedule\Schedule $schedule */
-    protected $schedule;
-    /** @var  PaymentMethod\PaymentMethod $paymentMethod */
-    protected $paymentMethod;
 
     protected $name;
     protected $address;
-    protected $id;
+    protected $rate;
 
-    public function __construct($name, $address)
+    public function __construct($name, $address, $rate)
     {
         $this->name = $name;
         $this->address = $address;
+        $this->rate = $rate;
     }
 
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setType(EmployeeType\EmployeeType $type)
+    public function setType($type)
     {
         $this->type = $type;
+        $type->setRate($this->rate);
     }
 
-    public function setSchedule(Schedule\Schedule $schedule)
+    public function isPayDate($date)
     {
-        $this->schedule = $schedule;
+        return $this->type->isPayDate($date);
     }
 
-    public function setPaymentMethod(PaymentMethod\PaymentMethod $method)
+    public function makePayment()
     {
-        $this->paymentMethod = $method;
-    }
+        $payment = $this->type->makePayment();
+        $payment->setEmployee($this);
 
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function getSalary()
-    {
-        return $this->type->getSalary($this);
-    }
-
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    public function getSchedule()
-    {
-        return $this->schedule;
-    }
-
-    public function getMethod()
-    {
-        return $this->paymentMethod;
-    }
-
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    public function toArray()
-    {
-        $array[] = $this->name;
-        $array[] = $this->address;
-        $array[] = get_class($this->paymentMethod);
-        $array[] = get_class($this->schedule);
-        $array[] = get_class($this->type);
-
-        return $array;
+        return $payment;
     }
 }
