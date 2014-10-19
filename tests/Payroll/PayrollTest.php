@@ -12,10 +12,7 @@ use Payroll\SalariedType;
 class PayrollTest extends \PHPUnit_Framework_TestCase
 {
 
-    /**
-     * @test
-     */
-    public function it_should_return_empty_payments_when_do_not_exists_employees()
+    public function testWhenDoNotExistsEmployeesShouldReturnEmptyPaymentCollection()
     {
         $employees = new Collection();
         $payroll = new Payroll($employees);
@@ -27,21 +24,40 @@ class PayrollTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function it_should_pay_flat_salary_every_month()
+    public function testPayFlatSalaryEveryMonth()
     {
-        $employeesList = new Collection();
-        $employee = new Employee("Bob", "Home", 1000);
-        $employee->setType(new SalariedType('2014-01-01'));
-
-        $employeesList->add($employee);
+        $employeesList = $this->createEmployeesList();
         $payroll = new Payroll($employeesList);
         $payDate = \DateTime::createFromFormat('Y-m-d', '2014-10-01');
-        $payments = $payroll->payEmployees($payDate);
+        $paymentsList = $payroll->payEmployees($payDate);
+        $this->assertEquals(2, $paymentsList->count());
 
-        $this->assertEquals(1, $payments->count());
+        $paymentsList->rewind();
+        $employeesList->rewind();
         /** @var Payment $payment */
-        $payment = $payments->current();
+        $payment = $paymentsList->current();
         $this->assertEquals(1000, $payment->getMoney());
-        $this->assertEquals($employee, $payment->getEmployee());
+        $this->assertEquals($employeesList->current(), $payment->getEmployee());
+
+        $paymentsList->next();
+        $employeesList->next();
+        $payment = $paymentsList->current();
+        $this->assertEquals(1200, $payment->getMoney());
+        $this->assertEquals($employeesList->current(), $payment->getEmployee());
+    }
+
+    public function createEmployeesList()
+    {
+        $employeesList = new Collection();
+        $employeeBob = new Employee("Bob", "Home", 1000);
+        $employeeBob->setType(new SalariedType('2014-01-01'));
+        $employeesList->add($employeeBob);
+
+        $employeeStelu = new Employee("Bob", "Spain", 1200);
+        $employeeStelu->setType(new SalariedType('2014-07-01'));
+        $employeesList->add($employeeStelu);
+
+
+        return $employeesList;
     }
 }

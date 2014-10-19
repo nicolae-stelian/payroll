@@ -20,7 +20,7 @@ class Employee
         $this->rate = $rate;
     }
 
-    public function setType($type)
+    public function setType(EmployeeType $type)
     {
         $this->type = $type;
         $type->setRate($this->rate);

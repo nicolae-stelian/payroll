@@ -4,6 +4,11 @@
 namespace Payroll;
 
 
-interface EmployeeType {
+interface EmployeeType
+{
+    public function setRate($rate);
 
-} 
+    public function isPayDate(\DateTime $date);
+
+    public function makePayment();
+}

@@ -4,7 +4,7 @@
 namespace Payroll;
 
 
-class SalariedType
+class SalariedType implements EmployeeType
 {
     protected $hiringDate;
     protected $rate;
@@ -19,7 +19,7 @@ class SalariedType
         $this->rate = $rate;
     }
 
-    public function isPayDate($date)
+    public function isPayDate(\DateTime $date)
     {
         // if is last month day return true
         return true;
