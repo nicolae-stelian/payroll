@@ -8,7 +8,7 @@ use DateTime;
 class SalariedType implements EmployeeType
 {
     protected $hiringDate;
-    protected $rate;
+    protected $salary;
 
     public function __construct($hiringDate)
     {
@@ -17,7 +17,7 @@ class SalariedType implements EmployeeType
 
     public function setRate($rate)
     {
-        $this->rate = $rate;
+        $this->salary = $rate;
     }
 
     public function isPayDate(DateTime $date)
@@ -32,7 +32,7 @@ class SalariedType implements EmployeeType
 
     public function makePayment()
     {
-        return new Payment($this->rate);
+        return new Payment($this->salary);
     }
 
     /**

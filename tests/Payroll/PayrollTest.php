@@ -4,10 +4,12 @@ namespace Tests;
 
 
 use Payroll\Employee;
+use Payroll\HourlyType;
 use Payroll\Payment;
 use Payroll\Payroll;
 use Payroll\Collection;
 use Payroll\SalariedType;
+use Payroll\TimeCard;
 use PHPUnit_Framework_TestCase as TestCase;
 use DateTime;
 
@@ -87,5 +89,21 @@ class PayrollTest extends TestCase
         $payDate = DateTime::createFromFormat('Y-m-d', '2014-11-30');
         $paymentsList = $this->payroll->payEmployees($payDate);
         $this->assertEquals(0, $paymentsList->count());
+    }
+
+    public function addHourlyEmployee()
+    {
+        $employeeList = new Collection();
+        $bob = new Employee("Bob", "Home", 15.25);
+
+        $timeCards = new Collection();
+        $timeCards->add(new TimeCard('2014-11-30', 8));
+        $bob->setType(new HourlyType('2014-07-01', $timeCards));
+
+        $employeeList->add($bob);
+        $payDate = DateTime::createFromFormat('Y-m-d', '2015-01-30');
+        $payroll = new Payroll($employeeList);
+        $paymentsList = $payroll->payEmployees($payDate);
+
     }
 }
