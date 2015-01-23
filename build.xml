@@ -36,7 +36,7 @@
             <arg value="--standard=PSR2"/>
             <arg path="${basedir}/src"/>
         </exec>
-        <exec executable="phpcs" failonerror="true">
+        <exec executable="phpcs.phar" failonerror="true">
             <arg value="--standard=PSR2"/>
             <arg path="${basedir}/tests"/>
         </exec>

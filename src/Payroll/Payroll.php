@@ -12,6 +12,7 @@ class Payroll
     public function __construct(Collection $employees)
     {
         $this->employees = $employees;
+        $this->employees->rewind();
     }
 
     public function payEmployees(\DateTime $date)
@@ -23,6 +24,8 @@ class Payroll
                 $payments->add($employee->makePayment());
             }
         }
+        $payments->rewind();
+        $this->employees->rewind();
         return $payments;
     }
 }
