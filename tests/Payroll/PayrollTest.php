@@ -13,69 +13,18 @@ use DateTime;
 
 class PayrollTest extends TestCase
 {
+    /** @var  Collection */
+    protected $employees;
+    /** @var  Payroll */
+    protected $payroll;
 
-    public function testWhenDoNotExistsEmployeesShouldReturnEmptyPaymentCollection()
+    public function setUp()
     {
-        $employees = new Collection();
-        $payroll = new Payroll($employees);
-        $payDate = \DateTime::createFromFormat('Y-m-d', '2014-12-31');
-        $payments = $payroll->payEmployees($payDate);
-        $this->assertEquals(0, $payments->count());
+        $this->employees = $this->createEmployeesList();
+        $this->payroll = new Payroll($this->employees);
     }
 
-    /** @test */
-    public function testPayFlatSalaryEveryMonth()
-    {
-        $employeesList = $this->createEmployeesList();
-        $payroll = new Payroll($employeesList);
-        $payDate = DateTime::createFromFormat('Y-m-d', '2015-01-30');
-        $paymentsList = $payroll->payEmployees($payDate);
-        $this->assertEquals(2, $paymentsList->count());
-
-        /** @var Payment $payment */
-        $payment = $paymentsList->current();
-        $this->assertEquals(1000, $payment->getMoney());
-        $this->assertEquals($employeesList->current(), $payment->getEmployee());
-
-        $paymentsList->next();
-        $employeesList->next();
-        $payment = $paymentsList->current();
-        $this->assertEquals(1200, $payment->getMoney());
-        $this->assertEquals($employeesList->current(), $payment->getEmployee());
-    }
-
-    /** @test */
-    public function doNotPayFlatSalaryIfIsNotLastWorkingDayOfTheMonth()
-    {
-        $employeesList = $this->createEmployeesList();
-        $payroll = new Payroll($employeesList);
-        $payDate = DateTime::createFromFormat('Y-m-d', '2015-01-08');
-        $paymentsList = $payroll->payEmployees($payDate);
-        $this->assertEquals(0, $paymentsList->count());
-    }
-
-    /** @test */
-    public function doNotPayFlatSalaryIfIsSaturday()
-    {
-        $employeesList = $this->createEmployeesList();
-        $payroll = new Payroll($employeesList);
-        $payDate = DateTime::createFromFormat('Y-m-d', '2015-01-31');
-        $paymentsList = $payroll->payEmployees($payDate);
-        $this->assertEquals(0, $paymentsList->count());
-    }
-
-    /** @test */
-    public function doNotPayFlatSalaryIfIsSunday()
-    {
-        $employeesList = $this->createEmployeesList();
-        $payroll = new Payroll($employeesList);
-        $payDate = DateTime::createFromFormat('Y-m-d', '2014-11-30');
-        $paymentsList = $payroll->payEmployees($payDate);
-        $this->assertEquals(0, $paymentsList->count());
-    }
-
-
-    public function createEmployeesList()
+    protected function createEmployeesList()
     {
         $employeesList = new Collection();
         $bob = new Employee("Bob", "Home", 1000);
@@ -87,5 +36,56 @@ class PayrollTest extends TestCase
         $employeesList->add($stelu);
 
         return $employeesList;
+    }
+
+    public function testWhenDoNotExistsEmployeesShouldReturnEmptyPaymentCollection()
+    {
+        $payroll = new Payroll(new Collection());
+        $payDate = \DateTime::createFromFormat('Y-m-d', '2014-12-31');
+        $payments = $payroll->payEmployees($payDate);
+        $this->assertEquals(0, $payments->count());
+    }
+
+    /** @test */
+    public function testPayFlatSalaryEveryMonth()
+    {
+        $payDate = DateTime::createFromFormat('Y-m-d', '2015-01-30');
+        $paymentsList = $this->payroll->payEmployees($payDate);
+        $this->assertEquals(2, $paymentsList->count());
+
+        /** @var Payment $payment */
+        $payment = $paymentsList->current();
+        $this->assertEquals(1000, $payment->getMoney());
+        $this->assertEquals($this->employees->current(), $payment->getEmployee());
+
+        $paymentsList->next();
+        $this->employees->next();
+        $payment = $paymentsList->current();
+        $this->assertEquals(1200, $payment->getMoney());
+        $this->assertEquals($this->employees->current(), $payment->getEmployee());
+    }
+
+    /** @test */
+    public function doNotPayFlatSalaryIfIsNotLastWorkingDayOfTheMonth()
+    {
+        $payDate = DateTime::createFromFormat('Y-m-d', '2015-01-08');
+        $paymentsList = $this->payroll->payEmployees($payDate);
+        $this->assertEquals(0, $paymentsList->count());
+    }
+
+    /** @test */
+    public function doNotPayFlatSalaryIfIsSaturday()
+    {
+        $payDate = DateTime::createFromFormat('Y-m-d', '2015-01-31');
+        $paymentsList = $this->payroll->payEmployees($payDate);
+        $this->assertEquals(0, $paymentsList->count());
+    }
+
+    /** @test */
+    public function doNotPayFlatSalaryIfIsSunday()
+    {
+        $payDate = DateTime::createFromFormat('Y-m-d', '2014-11-30');
+        $paymentsList = $this->payroll->payEmployees($payDate);
+        $this->assertEquals(0, $paymentsList->count());
     }
 }
